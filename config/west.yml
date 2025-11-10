@@ -19,6 +19,9 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: main
+    - name: zmk-feature-charge-indicator
+      remote: 4mplelab
+      revision: main
     - name: zmk-keyboards-LisM
       remote: 4mplelab
       revision: main
