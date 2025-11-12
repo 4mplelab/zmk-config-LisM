@@ -5,16 +5,19 @@ set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/west-common.sh"
 
 # overlay-path を _west 起点で絶対化し、末尾に lism.keymap を追加して
-# セミコロン連結の一引数として返す（なければ空文字）
-prepare_overlay_arg() {
+# セミコロン連結の“値だけ”を返す（なければ空文字）
+# 戻り値例: DTC_OVERLAY_FILE=/abs/overlay1;/abs/overlay2;/abs/lism.keymap
+prepare_overlay_value() {
   local overlay_items_str="${1:-}"
   local -a items=()
   local -a resolved=()
 
+  # 入力はセミコロン/スペース混在を許容し、スペース配列へ正規化
   if [ -n "${overlay_items_str}" ]; then
     IFS=' ' read -r -a items <<<"$(echo "${overlay_items_str}" | tr ';' ' ')"
   fi
 
+  # 相対パスは WEST_WS 基点で絶対化
   for rel in "${items[@]}"; do
     [ -z "${rel}" ] && continue
     case "${rel}" in
@@ -23,6 +26,7 @@ prepare_overlay_arg() {
     esac
   done
 
+  # 末尾に lism.keymap を付与（存在すれば）
   local keymap_path="${ROOT_DIR}/config/lism.keymap"
   if [ -f "${keymap_path}" ]; then
     resolved+=( "${keymap_path}" )
@@ -30,40 +34,14 @@ prepare_overlay_arg() {
     echo "Warning: ${keymap_path} not found. Continuing without keymap overlay." >&2
   fi
 
+  # セミコロン連結で“値だけ”生成
   if [ "${#resolved[@]}" -gt 0 ]; then
     local dtc_val
     dtc_val="$(printf "%s;" "${resolved[@]}" | sed 's/;$//')"
-    echo "-DDTC_OVERLAY_FILE=${dtc_val}"
+    echo "DTC_OVERLAY_FILE=${dtc_val}"
   else
     echo ""
   fi
-}
-
-# "lism_left rgbled_adapter" → -DSHIELD=... の配列化（echoで返す）
-prepare_shield_args() {
-  local shields_line="${1:-}"
-  local -a shields=()
-  local -a args=()
-  if [ -n "${shields_line}" ]; then
-    read -r -a shields <<<"${shields_line}"
-    for s in "${shields[@]}"; do
-      [ -n "${s}" ] && args+=( "-DSHIELD=${s}" )
-    done
-  fi
-  echo "${args[@]}"
-}
-
-# _west を working-dir に固定して west build を実行
-run_west_build() {
-  local board="${1:?board required}"; shift
-  local build_dir="${1:?build_dir required}"; shift
-  (
-    cd "${WEST_WS}"
-    set -x
-    # shellcheck disable=SC2068
-    west build -s zmk/app -d "${build_dir}" -b "${board}" $@
-    set +x
-  )
 }
 
 # uf2 優先で firmware_builds/ へコピー（なければ bin）

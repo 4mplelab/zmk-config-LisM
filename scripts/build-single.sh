@@ -17,7 +17,7 @@ SEL=$((CHOICE - 1))
 [ "${SEL}" -ge 0 ] && [ "${SEL}" -lt "${COUNT}" ] || { echo "Invalid choice"; exit 1; }
 
 BOARD="$(yq -r ".include[${SEL}].board" "${BUILD_MATRIX_PATH}")"
-SHIELDS_LINE="$(yq -r ".include[${SEL}].shield // \"\"" "${BUILD_MATRIX_PATH}")"
+SHIELDS_LINE_RAW="$(yq -r ".include[${SEL}].shield // \"\"" "${BUILD_MATRIX_PATH}")"
 ARTIFACT_NAME_CFG="$(yq -r ".include[${SEL}].[\"artifact-name\"] // \"\"" "${BUILD_MATRIX_PATH}")"
 SNIPPET="$(yq -r ".include[${SEL}].snippet // \"\"" "${BUILD_MATRIX_PATH}")"
 
@@ -36,22 +36,64 @@ fi
 
 BUILD_DIR="$(mktemp -d)"
 
+# west の追加引数
 EXTRA_WEST_ARGS=()
-[ -n "${SNIPPET}" ] && EXTRA_WEST_ARGS+=(-S "${SNIPPET}")
+[ -n "${SNIPPET}" ] && EXTRA_WEST_ARGS+=( -S "${SNIPPET}" )
 
-EXTRA_CMAKE_ARGS=()
-SHIELD_ARGS_STR="$(prepare_shield_args "${SHIELDS_LINE}")"
-[ -n "${SHIELD_ARGS_STR}" ] && read -r -a shield_args <<<"${SHIELD_ARGS_STR}" && EXTRA_CMAKE_ARGS+=( "${shield_args[@]}" )
-OVERLAY_ARG="$(prepare_overlay_arg "${OVERLAY_ITEMS_STR}")"
-[ -n "${OVERLAY_ARG}" ] && EXTRA_CMAKE_ARGS+=( "${OVERLAY_ARG}" )
+# CMake 引数（配列で保持）
+CM_ARGS=()
+CM_ARGS+=( -DZMK_CONFIG="${CONFIG_DIR}" )
 
-run_west_build "${BOARD}" "${BUILD_DIR}" \
-  "${EXTRA_WEST_ARGS[@]}" -- \
-  -DZMK_CONFIG="${CONFIG_DIR}" \
-  "${EXTRA_CMAKE_ARGS[@]}"
+# SHIELD をメインで正規化し、-D と値を別要素で追加（値にクォートは含めない）
+SHIELDS_LINE="$(echo "${SHIELDS_LINE_RAW}" | tr -s '[:space:]' ' ' | sed 's/^ *//; s/ *$//')"
+if [ -n "${SHIELDS_LINE}" ]; then
+  declare -A _seen=()
+  read -r -a _items <<<"${SHIELDS_LINE}"
+  uniq_items=()
+  for it in "${_items[@]}"; do
+    [ -z "${it}" ] && continue
+    if [ -z "${_seen[${it}]+x}" ]; then
+      uniq_items+=( "${it}" )
+      _seen["${it}"]=1
+    fi
+  done
+  SHIELD_VALUE="$(IFS=' ' ; echo "${uniq_items[*]}")"
+  CM_ARGS+=( -D "SHIELD=${SHIELD_VALUE}" )
+fi
 
+# overlay は値だけ返す関数で取得し、-D と別要素で追加
+DTC_OVERLAY_VAL="$(prepare_overlay_value "${OVERLAY_ITEMS_STR}")"
+if [ -n "${DTC_OVERLAY_VAL}" ]; then
+  CM_ARGS+=( -D "${DTC_OVERLAY_VAL}" )
+fi
+
+# 追加 cmake-args
+CMAKE_ARGS_CFG_RAW="$(yq -r ".include[${SEL}].[\"cmake-args\"] // \"\"" "${BUILD_MATRIX_PATH}")"
+if [ -n "${CMAKE_ARGS_CFG_RAW}" ]; then
+  read -r -a cmargs <<<"${CMAKE_ARGS_CFG_RAW}"
+  CM_ARGS+=( "${cmargs[@]}" )
+fi
+
+# west build を配列のまま直接実行
+cmd=( west build -s zmk/app -d "${BUILD_DIR}" -b "${BOARD}" )
+cmd+=( "${EXTRA_WEST_ARGS[@]}" )
+cmd+=( -- )
+cmd+=( "${CM_ARGS[@]}" )
+
+(
+  cd "${WEST_WS}"
+  set -x
+  "${cmd[@]}"
+  set +x
+)
+
+# アーティファクト名
 ARTIFACT_NAME="${ARTIFACT_NAME_CFG}"
 if [ -z "${ARTIFACT_NAME}" ]; then
-  ARTIFACT_NAME="$( [ -n "${SHIELDS_LINE}" ] && echo "$(echo "${SHIELDS_LINE}" | tr ' ' '-' )-${BOARD}-zmk" || echo "${BOARD}-zmk" )"
+  if [ -n "${SHIELDS_LINE}" ]; then
+    ARTIFACT_NAME="$(echo "${SHIELDS_LINE}" | tr ' ' '-' )-${BOARD}-zmk"
+  else
+    ARTIFACT_NAME="${BOARD}-zmk"
+  fi
 fi
 copy_artifacts "${BUILD_DIR}" "${ARTIFACT_NAME}"
