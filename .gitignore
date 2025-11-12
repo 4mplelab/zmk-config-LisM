@@ -52,3 +52,6 @@ docker-compose.override.yml
 # Local environment files
 .env
 .env.*
+
+_west/
+firmware_builds/
