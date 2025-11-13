@@ -35,6 +35,20 @@ include:
     shield: lism_right rgbled_adapter
     artifact-name: lism_right_trackball
     overlay-path: zmk-keyboards-LisM/boards/shields/lism/trackball_r.overlay
+
   - board: seeeduino_xiao_ble
     shield: settings_reset
     artifact-name: settings_reset-seeeduino_xiao_ble-zmk
+  
+  - board: seeeduino_xiao_ble
+    shield: lism_right rgbled_adapter
+    artifact-name: lism_right_non_trackball_studio
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    overlay-path: zmk-keyboards-LisM/boards/shields/lism/non_trackball_r.overlay
+  - board: seeeduino_xiao_ble
+    shield: lism_right rgbled_adapter
+    artifact-name: lism_right_trackball_studio
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    overlay-path: zmk-keyboards-LisM/boards/shields/lism/trackball_r.overlay

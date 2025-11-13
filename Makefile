@@ -11,12 +11,15 @@ endif
 ROOT_DIR := $(abspath $(CURDIR))
 WEST_WS := $(ROOT_DIR)/_west
 
-.PHONY: all setup-west single matrix clean
+.PHONY: all_exclude_studio all setup-west single clean
 
-all: matrix
+# studio を含まない全ビルド
+all_exclude_studio:
+	@FILTER_MODE=exclude_studio bash scripts/build-matrix.sh
 
-matrix:
-	@bash scripts/build-matrix.sh
+# studio を含む全ビルド
+all:
+	@FILTER_MODE=all bash scripts/build-matrix.sh
 
 single:
 	@bash scripts/build-single.sh
@@ -27,4 +30,5 @@ setup-west:
 clean:
 	@echo "🧹 Cleaning firmware_builds/"
 	@rm -rf "$(ROOT_DIR)/firmware_builds"
-	@echo "🧹 To reset workspace: rm -rf $(WEST_WS) && make setup-west"
+	@echo "🧹🧹🧹 Cleaned!! 🧹🧹🧹"
+	@echo "To reset workspace (optional): rm -rf $(WEST_WS) && make setup-west"

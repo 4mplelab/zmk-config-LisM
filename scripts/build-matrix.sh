@@ -3,14 +3,46 @@ set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/build-helpers.sh"
 
 BUILD_MATRIX_PATH="${ROOT_DIR}/build.yaml"
+FILTER_MODE="${FILTER_MODE:-all}"  # all | include_studio | exclude_studio
+
 COUNT="$(yq -r '.include | length' "${BUILD_MATRIX_PATH}")"
 [ "${COUNT}" -gt 0 ] || { echo "No builds defined in ${BUILD_MATRIX_PATH}"; exit 1; }
+
+matched=0
 
 for idx in $(seq 0 $((COUNT - 1))); do
   BOARD="$(yq -r ".include[${idx}].board" "${BUILD_MATRIX_PATH}")"
   SHIELDS_LINE_RAW="$(yq -r ".include[${idx}].shield // \"\"" "${BUILD_MATRIX_PATH}")"
   ARTIFACT_NAME_CFG="$(yq -r ".include[${idx}].[\"artifact-name\"] // \"\"" "${BUILD_MATRIX_PATH}")"
   SNIPPET="$(yq -r ".include[${idx}].snippet // \"\"" "${BUILD_MATRIX_PATH}")"
+
+  # フィルタ判定（artifact-name に studio を含むか）
+  is_studio_entry=false
+  if [[ "${ARTIFACT_NAME_CFG}" == *studio* ]]; then
+    is_studio_entry=true
+  fi
+
+  case "${FILTER_MODE}" in
+    include_studio)
+      if [ "${is_studio_entry}" != true ]; then
+        continue
+      fi
+      ;;
+    exclude_studio)
+      if [ "${is_studio_entry}" = true ]; then
+        continue
+      fi
+      ;;
+    all)
+      # no filter
+      ;;
+    *)
+      echo "Unknown FILTER_MODE: ${FILTER_MODE}" >&2
+      exit 2
+      ;;
+  esac
+
+  matched=$((matched + 1))
 
   # overlay-path（配列/文字列両対応）を安全にまとめる
   OVERLAY_NODE_TYPE="$(yq -r ".include[${idx}].[\"overlay-path\"] | type" "${BUILD_MATRIX_PATH}" || echo null)"
@@ -93,5 +125,10 @@ for idx in $(seq 0 $((COUNT - 1))); do
 
   copy_artifacts "${BUILD_DIR}" "${ARTIFACT_NAME}"
 done
+
+if [ "${matched}" -eq 0 ]; then
+  echo "ℹ No builds matched FILTER_MODE='${FILTER_MODE}' (artifact-name studio filter)."
+  exit 0
+fi
 
 echo "🎉 All builds copied to ${OUTPUT_DIR}"

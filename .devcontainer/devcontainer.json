@@ -10,11 +10,18 @@
   "postCreateCommand": "bash .devcontainer/setup-west.sh",
   "customizations": {
     "vscode": {
-      "settings": { "terminal.integrated.shell.linux": "/bin/bash" },
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "files.associations": {
+          "*.keymap": "devicetree"
+        }
+      },
       "extensions": [
         "ms-vscode.makefile-tools",
         "ms-azuretools.vscode-docker",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "zephyr-tools.zephyr-ide",
+        "spadin.zmk-tools"
       ]
     }
   }
