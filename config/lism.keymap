@@ -16,7 +16,6 @@
 };
 
 
-
 / {
     macros {
         emoji: emoji_macro {

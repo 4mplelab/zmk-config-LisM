@@ -11,7 +11,7 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: v0.3.0
       import: app/west.yml
     - name: zmk-driver-paw3222
       remote: sekigon-gonnoc
@@ -22,9 +22,5 @@ manifest:
     - name: zmk-feature-charge-indicator
       remote: 4mplelab
       revision: main
-    - name: zmk-keyboards-LisM
-      remote: 4mplelab
-      revision: main
-      path: zmk-keyboards-LisM
   self:
     path: config

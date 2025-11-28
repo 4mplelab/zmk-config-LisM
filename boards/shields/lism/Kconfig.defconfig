@@ -1,0 +1,25 @@
+if SHIELD_LISM_L || SHIELD_LISM_R
+    config ZMK_KEYBOARD_NAME
+        default "LisM"
+
+    config NFCT_PINS_AS_GPIOS
+        default y
+
+    config ZMK_SPLIT
+        default y
+
+    config ZMK_POINTING
+        default y
+
+    config ZMK_MOUSE
+        default y
+    
+    config PAW3222
+        default y
+    
+    config INPUT
+        default y
+    
+    config SPI
+        default y
+endif

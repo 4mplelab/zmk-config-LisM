@@ -21,19 +21,6 @@ SHIELDS_LINE_RAW="$(yq -r ".include[${SEL}].shield // \"\"" "${BUILD_MATRIX_PATH
 ARTIFACT_NAME_CFG="$(yq -r ".include[${SEL}].[\"artifact-name\"] // \"\"" "${BUILD_MATRIX_PATH}")"
 SNIPPET="$(yq -r ".include[${SEL}].snippet // \"\"" "${BUILD_MATRIX_PATH}")"
 
-# overlay-path（配列/文字列対応）
-NODE_TYPE="$(yq -r ".include[${SEL}].[\"overlay-path\"] | type" "${BUILD_MATRIX_PATH}" || echo null)"
-OVERLAY_ITEMS_STR=""
-if [ "${NODE_TYPE}" = "!!seq" ]; then
-  LEN="$(yq -r ".include[${SEL}].[\"overlay-path\"] | length" "${BUILD_MATRIX_PATH}")"
-  for j in $(seq 0 $((LEN - 1))); do
-    item="$(yq -r ".include[${SEL}].[\"overlay-path\"][${j}]" "${BUILD_MATRIX_PATH}")"
-    [ -n "${item}" ] && OVERLAY_ITEMS_STR="${OVERLAY_ITEMS_STR}${item} "
-  done
-else
-  OVERLAY_ITEMS_STR="$(yq -r ".include[${SEL}].[\"overlay-path\"] // \"\"" "${BUILD_MATRIX_PATH}")"
-fi
-
 BUILD_DIR="$(mktemp -d)"
 
 # west の追加引数
@@ -43,6 +30,7 @@ EXTRA_WEST_ARGS=()
 # CMake 引数（配列で保持）
 CM_ARGS=()
 CM_ARGS+=( -DZMK_CONFIG="${CONFIG_DIR}" )
+CM_ARGS+=( -DZMK_EXTRA_MODULES="${ROOT_DIR}" )
 
 # SHIELD をメインで正規化し、-D と値を別要素で追加（値にクォートは含めない）
 SHIELDS_LINE="$(echo "${SHIELDS_LINE_RAW}" | tr -s '[:space:]' ' ' | sed 's/^ *//; s/ *$//')"
@@ -59,12 +47,6 @@ if [ -n "${SHIELDS_LINE}" ]; then
   done
   SHIELD_VALUE="$(IFS=' ' ; echo "${uniq_items[*]}")"
   CM_ARGS+=( -D "SHIELD=${SHIELD_VALUE}" )
-fi
-
-# overlay は値だけ返す関数で取得し、-D と別要素で追加
-DTC_OVERLAY_VAL="$(prepare_overlay_value "${OVERLAY_ITEMS_STR}")"
-if [ -n "${DTC_OVERLAY_VAL}" ]; then
-  CM_ARGS+=( -D "${DTC_OVERLAY_VAL}" )
 fi
 
 # 追加 cmake-args

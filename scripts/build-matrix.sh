@@ -44,19 +44,6 @@ for idx in $(seq 0 $((COUNT - 1))); do
 
   matched=$((matched + 1))
 
-  # overlay-path（配列/文字列両対応）を安全にまとめる
-  OVERLAY_NODE_TYPE="$(yq -r ".include[${idx}].[\"overlay-path\"] | type" "${BUILD_MATRIX_PATH}" || echo null)"
-  OVERLAY_ITEMS_STR=""
-  if [ "${OVERLAY_NODE_TYPE}" = "!!seq" ]; then
-    MAP_LEN="$(yq -r ".include[${idx}].[\"overlay-path\"] | length" "${BUILD_MATRIX_PATH}")"
-    for j in $(seq 0 $((MAP_LEN - 1))); do
-      item="$(yq -r ".include[${j}]" <(yq ".include[${idx}].[\"overlay-path\"]" "${BUILD_MATRIX_PATH}"))" || true
-      [ -n "${item}" ] && OVERLAY_ITEMS_STR="${OVERLAY_ITEMS_STR}${item} "
-    done
-  else
-    OVERLAY_ITEMS_STR="$(yq -r ".include[${idx}].[\"overlay-path\"] // \"\"" "${BUILD_MATRIX_PATH}")"
-  fi
-
   CMAKE_ARGS_CFG_RAW="$(yq -r ".include[${idx}].[\"cmake-args\"] // \"\"" "${BUILD_MATRIX_PATH}")"
 
   BUILD_DIR="$(mktemp -d)"
@@ -70,6 +57,7 @@ for idx in $(seq 0 $((COUNT - 1))); do
 
   # ZMK_CONFIG は常に追加
   CM_ARGS+=( -DZMK_CONFIG="${CONFIG_DIR}" )
+  CM_ARGS+=( -DZMK_EXTRA_MODULES="${ROOT_DIR}" )
 
   # SHIELD の値をメインで正規化し、-D と値を「別要素」で追加（値にクォートは含めない）
   SHIELDS_LINE="$(echo "${SHIELDS_LINE_RAW}" | tr -s '[:space:]' ' ' | sed 's/^ *//; s/ *$//')"
@@ -86,12 +74,6 @@ for idx in $(seq 0 $((COUNT - 1))); do
     done
     SHIELD_VALUE="$(IFS=' ' ; echo "${uniq_items[*]}")"
     CM_ARGS+=( -D "SHIELD=${SHIELD_VALUE}" )
-  fi
-
-  # overlay + lism.keymap（値だけを返す関数に揃える） → 値を -D と別要素で追加
-  DTC_OVERLAY_VAL="$(prepare_overlay_value "${OVERLAY_ITEMS_STR}")"
-  if [ -n "${DTC_OVERLAY_VAL}" ]; then
-    CM_ARGS+=( -D "${DTC_OVERLAY_VAL}" )
   fi
 
   # 追加 cmake-args（そのまま配列へ）

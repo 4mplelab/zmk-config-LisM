@@ -19,8 +19,6 @@
       "extensions": [
         "ms-vscode.makefile-tools",
         "ms-azuretools.vscode-docker",
-        "redhat.vscode-yaml",
-        "zephyr-tools.zephyr-ide",
         "spadin.zmk-tools"
       ]
     }

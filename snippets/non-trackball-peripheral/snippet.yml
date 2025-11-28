@@ -1,0 +1,4 @@
+name: non-trackball-peripheral
+append:
+  EXTRA_DTC_OVERLAY_FILE: non_trackball.overlay
+  EXTRA_CONF_FILE: ../non_trackball.conf

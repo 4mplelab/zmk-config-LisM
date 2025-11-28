@@ -1,0 +1,6 @@
+# No whitespace after the comma or in your keyboard name!
+config SHIELD_LISM_R
+    def_bool $(shields_list_contains,lism_right)
+
+config SHIELD_LISM_L
+    def_bool $(shields_list_contains,lism_left)

@@ -1,0 +1,18 @@
+&spi0 {
+    status = "okay";
+
+    trackball_peripheral: trackball@0 {
+        status = "okay";
+        compatible = "pixart,paw3222";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    };
+};
+
+// Overrides for the input-split child node
+&trackball_split {
+    device = <&trackball_peripheral>;
+    input-processors = 
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;  
+};

@@ -1,0 +1,57 @@
+name: Release (ZMK reusable workflow)
+
+on:
+  push:
+    tags:
+      - "v*"   # 例: v1.0.0
+
+permissions:
+  contents: write
+  actions: read
+  pull-requests: read
+
+jobs:
+  build:
+    name: Build via ZMK reusable workflow
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@v0.3.0
+    with:
+      archive_name: firmware
+    secrets: inherit
+
+  release:
+    name: Create GitHub Release with assets
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository (optional for changelog)
+        uses: actions/checkout@v4
+      
+      - name: Generate release notes
+        id: notes
+        uses: mikepenz/release-changelog-builder-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware
+          path: dist
+
+      - name: Create a single ZIP archive from artifacts
+        run: |
+          cd dist
+          sudo apt-get update
+          sudo apt-get install -y zip
+          # 1ファイルにまとめる（既存ZIPがあれば上書き）
+          zip -r firmware.zip .
+  
+      - name: Create GitHub Release and attach assets
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.notes.outputs.changelog }}
+          files: |
+            dist/**/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

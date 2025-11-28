@@ -1,0 +1,12 @@
+file_format: "1"
+id: lism
+name: LisM
+type: shield
+url: https://github.com/4mplelab/zmk-config-LisM
+requires: [seeeduino_xiao_ble]
+siblings:
+  - lism_left
+  - lism_right
+features:
+  - keys
+  - pointer
