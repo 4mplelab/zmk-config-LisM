@@ -11,15 +11,28 @@ endif
 ROOT_DIR := $(abspath $(CURDIR))
 WEST_WS := $(ROOT_DIR)/_west
 
-.PHONY: all_exclude_studio all setup-west single clean
+# 並列数を環境変数 PARALLEL から取得。未設定の場合はCPUコア数を自動検出。
+PARALLEL ?= $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 2)
 
-# studio を含まない全ビルド
-all_exclude_studio:
+.PHONY: all_p all all_studio_p all_studio setup-west single clean
+
+# studio を含まない全ビルド (並列実行)
+all_p:
+	@FILTER_MODE=exclude_studio bash scripts/build-matrix.sh --parallel=$(PARALLEL)
+
+# studio を含まない全ビルド (逐次実行)
+all:
 	@FILTER_MODE=exclude_studio bash scripts/build-matrix.sh
 
-# studio を含む全ビルド
-all:
+
+# studio を含む全ビルド (並列実行)
+all_studio_p:
+	@FILTER_MODE=all bash scripts/build-matrix.sh --parallel=$(PARALLEL)
+
+# studio を含む全ビルド (逐次実行)
+all_studio:
 	@FILTER_MODE=all bash scripts/build-matrix.sh
+
 
 single:
 	@bash scripts/build-single.sh
