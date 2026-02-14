@@ -1,3 +1,5 @@
+#include <input/processors/runtime-input-processor.dtsi>
+
 &spi0 {
     status = "okay";
 
@@ -13,6 +15,11 @@
 // ペリフェラル（split経由）のリスナーを有効化
 &peripheral_listener {
     status = "okay";
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &mouse_runtime_input_processor>;  
+    // input-processors = 
+    //         <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
+    //         <&mouse_runtime_input_processor>,
+    //         <&scroll_runtime_input_processor>;
 };
 
 // セントラルのリスナーを有効化し、deviceを紐付け
@@ -20,12 +27,13 @@
     status = "okay";
     device = <&trackball_central>;
     input-processors = 
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) 
+         &mouse_runtime_input_processor>;
+};
 
-    scroller {
-        layers = <2>;
-        input-processors = 
-            <&zip_xy_to_scroll_mapper>,
-            <&zip_scroll_scaler 1 16>;
-    };
+
+&scroll_runtime_input_processor {
+        x-codes = <INPUT_REL_X>;
+		y-codes = <INPUT_REL_Y>;
+		xy-to-scroll-enabled;
 };

@@ -4,64 +4,38 @@ include:
 # Central = Right
   - board: seeeduino_xiao_ble
     shield: lism_left rgbled_adapter
-    snippet: non-trackball-peripheral
+    snippet: "lism-peripheral non-trackball-peripheral"
     artifact-name: lism_left_peripheral_non_trackball
   - board: seeeduino_xiao_ble
     shield: lism_left rgbled_adapter
-    snippet: trackball-peripheral
+    snippet: "lism-peripheral trackball-peripheral"
     artifact-name: lism_left_peripheral_trackball
   - board: seeeduino_xiao_ble
     shield: lism_right rgbled_adapter
-    snippet: non-trackball-central
+    snippet: "lism-central studio-rpc-usb-uart non-trackball-central"
     artifact-name: lism_right_central_non_trackball
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
   - board: seeeduino_xiao_ble
     shield: lism_right rgbled_adapter
-    snippet: trackball-central
+    snippet: "lism-central studio-rpc-usb-uart trackball-central"
     artifact-name: lism_right_central_trackball
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-  
-  - board: seeeduino_xiao_ble
-    shield: lism_right rgbled_adapter
-    artifact-name: lism_right_central_non_trackball_studio
-    snippet: "studio-rpc-usb-uart non-trackball-central"
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-  - board: seeeduino_xiao_ble
-    shield: lism_right rgbled_adapter
-    artifact-name: lism_right_central_trackball_studio
-    snippet: "studio-rpc-usb-uart trackball-central"
-    cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
 
 # Central = Left
   # - board: seeeduino_xiao_ble
   #   shield: lism_right rgbled_adapter
-  #   snippet: non-trackball-peripheral
+  #   snippet: "lism-peripheral non-trackball-peripheral"
   #   artifact-name: lism_right_peripheral_non_trackball
   # - board: seeeduino_xiao_ble
   #   shield: lism_right rgbled_adapter
-  #   snippet: trackball-peripheral
+  #   snippet: "lism-peripheral trackball-peripheral"
   #   artifact-name: lism_right_peripheral_trackball
   # - board: seeeduino_xiao_ble
   #   shield: lism_left rgbled_adapter
-  #   snippet: non-trackball-central
+  #   snippet: "lism-central studio-rpc-usb-uart non-trackball-central"
   #   artifact-name: lism_left_central_non_trackball
-  #   cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
   # - board: seeeduino_xiao_ble
   #   shield: lism_left rgbled_adapter
-  #   snippet: trackball-central
+  #   snippet: "lism-central studio-rpc-usb-uart trackball-central"
   #   artifact-name: lism_left_central_trackball
-  #   cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-  
-  # - board: seeeduino_xiao_ble
-  #   shield: lism_left rgbled_adapter
-  #   artifact-name: lism_left_central_non_trackball_studio
-  #   snippet: "studio-rpc-usb-uart non-trackball-central"
-  #   cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
-  # - board: seeeduino_xiao_ble
-  #   shield: lism_left rgbled_adapter
-  #   artifact-name: lism_left_central_trackball_studio
-  #   snippet: "studio-rpc-usb-uart trackball-central"
-  #   cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=y
   
   # Reset
   - board: seeeduino_xiao_ble

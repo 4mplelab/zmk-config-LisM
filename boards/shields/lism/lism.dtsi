@@ -3,6 +3,7 @@
 #include <physical_layouts.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <input/processors.dtsi>
+#include <behaviors/battery_history_request.dtsi>
 
 / {
     chosen {
@@ -207,10 +208,6 @@
         compatible = "zmk,input-listener";
         status = "disabled";
         device = <&trackball_split>;
-        // input-processors = 
-        //     <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-        //     <&zip_xy_to_scroll_mapper>,
-        //     <&zip_scroll_scaler 1 16>;
     };
 
     // セントラルのためのリスナー（後でdeviceを割当）

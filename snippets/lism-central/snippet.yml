@@ -1,0 +1,3 @@
+name: lism-central
+append:
+  EXTRA_CONF_FILE: central.conf

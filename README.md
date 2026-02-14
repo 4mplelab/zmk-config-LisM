@@ -2,7 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-自作キーボード LisMのファームウェアです。
+自作キーボード LisMのファームウェアです。  
+このブランチは[DYA Studio](https://studio.dya.cormoran.works/)に対応したブランチです。
 
 ## 生成されるファームウェア一覧
 
@@ -12,11 +13,10 @@
 | `lism_left_peripheral_trackball.uf2`          | 左側 ペリフェラル トラックボール       |
 | `lism_right_central_non_trackball.uf2`        | 右側 セントラル 非トラックボール       |
 | `lism_right_central_trackball.uf2`            | 右側 セントラル トラックボール         |
-| `lism_right_central_non_trackball_studio.uf2` | 右側 セントラル 非トラックボール (ZMK Studio 対応) |
-| `lism_right_central_trackball_studio.uf2`     | 右側 セントラル トラックボール (ZMK Studio 対応)   |
 | `settings_reset-seeeduino_xiao_ble-zmk.uf2`   | 設定リセット用                        |
 
-## ローカルビルド手順
+<details>
+<summary>古い手順 (ローカルビルド)</summary>
 
 GitHub Actionsでのビルドは毎回2分-3分かかりますが、ローカル環境では40秒〜1分で完了します。(PCスペックによって前後します)  
 キーマップの変更など、少し試したいだけでも時間がかかるActionsに比べ、ローカルビルドなら素早く試行錯誤ができます。
@@ -100,9 +100,6 @@ GitHub Actionsでのビルドは毎回2分-3分かかりますが、ローカル
     更新が完了したら、上記「ビルド（ファームウェア作成）」の手順でファームウェアを再作成してください。
 
 <br>
-
-<details>
-<summary>技術的な詳細情報</summary>
 
 ### 概要
 このリポジトリは、ZMKユーザー設定のローカルビルド環境を提供します。  

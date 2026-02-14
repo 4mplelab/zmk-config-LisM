@@ -13,6 +13,4 @@
 // Overrides for the input-split child node
 &trackball_split {
     device = <&trackball_peripheral>;
-    input-processors = 
-        <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;  
 };
