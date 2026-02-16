@@ -15,7 +15,7 @@
 // ペリフェラル（split経由）のリスナーを有効化
 &peripheral_listener {
     status = "okay";
-    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &mouse_runtime_input_processor>;  
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &mouse_runtime_input_processor_peripheral>;  
     // input-processors = 
     //         <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
     //         <&mouse_runtime_input_processor>,
@@ -28,12 +28,49 @@
     device = <&trackball_central>;
     input-processors = 
         <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) 
-         &mouse_runtime_input_processor>;
+         &mouse_runtime_input_processor_central>;
 };
-
 
 &scroll_runtime_input_processor {
         x-codes = <INPUT_REL_X>;
 		y-codes = <INPUT_REL_Y>;
 		xy-to-scroll-enabled;
+};
+
+/ {
+    mouse_runtime_input_processor_central: mouse_runtime_input_processor_central {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "mouse";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        track-remainders;
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
+
+    mouse_runtime_input_processor_peripheral: mouse_runtime_input_processor_peripheral {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "mouse";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <1>;
+        rotation-degrees = <0>;
+        track-remainders;
+
+        temp-layer-transparent-behavior = <&trans>;
+        temp-layer-kp-behavior = <&kp>;
+        temp-layer-keep-keycodes = <LEFT_CONTROL LEFT_SHIFT LEFT_ALT LEFT_GUI RIGHT_CONTROL RIGHT_SHIFT RIGHT_ALT RIGHT_GUI>;
+
+        #input-processor-cells = <0>;
+    };
 };
