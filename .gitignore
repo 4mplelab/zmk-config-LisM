@@ -54,4 +54,4 @@ docker-compose.override.yml
 .env.*
 
 _west/
-firmware_builds/
+firmware_builds*/

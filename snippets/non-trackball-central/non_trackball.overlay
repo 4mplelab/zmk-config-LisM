@@ -1,6 +1,8 @@
 #include "../non_trackball.overlay"
+#include "../lism-input-processors.dtsi"
 
 // split経由のリスナーを有効化
 &peripheral_listener {
     status = "okay";
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT) &mouse_runtime_input_processor_peripheral>;  
 };
