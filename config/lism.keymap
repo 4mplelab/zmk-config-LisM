@@ -55,7 +55,7 @@
                 &kp Z            &kp X              &kp C                 &kp V                   &kp B                                                  &kp N        &kp M            &kp COMMA          &kp DOT             &kp SLASH
                 &lt 4 DELETE     &tog 1             &lt 1 TAB             &kp LS(LG(N4))          &lt 2 SPACE       &lt 3 ESC           &lt 3 BACKSPACE  &lt 2 ENTER  &kp LS(LG(N4))   &kp F7             &kp F10             &lt 4 F12 
             >;
-            sensor-bindings = <&encoder_msc SCRL_DOWN SCRL_UP>;
+            sensor-bindings = <&encoder_msc SCRL_UP SCRL_DOWN>;
         };
 
         layer_1 {
