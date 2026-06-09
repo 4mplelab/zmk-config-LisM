@@ -12,14 +12,14 @@ layers:
   - O
   - P
   - A
-  - {t: S, h: LALT}
-  - {t: D, h: LSHIFT}
-  - {t: F, h: LGUI}
-  - {t: G, h: LCTRL}
-  - {t: H, h: RCTRL}
-  - {t: J, h: RGUI}
-  - {t: K, h: RSHIFT}
-  - {t: L, h: RALT}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: D, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: F, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: G, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: H, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: J, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: K, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: L, h: '$$mdi:apple-keyboard-option$$'}
   - {t: ;, h: Mark Layer}
   - Z
   - X
@@ -31,48 +31,54 @@ layers:
   - ','
   - .
   - /
-  - {t: DEL, h: Device Layer}
+  - {t: '$$mdi:backspace-reverse-outline$$', h: Device Layer}
   - {t: Mouse Layer, h: toggle}
-  - {t: TAB, h: Mouse Layer}
-  - Sft+Gui+4
-  - {t: SPACE, h: Number Layer}
-  - {t: ESC, h: Mark Layer}
-  - {t: BS, h: Mark Layer}
-  - {t: ENTER, h: Number Layer}
-  - Sft+Gui+4
+  - {t: '$$mdi:keyboard-tab$$', h: Mouse Layer}
+  - $$mdi:pan-up$$
+  - {t: '$$mdi:keyboard-space$$', h: Number Layer}
+  - {t: '$$mdi:keyboard-esc$$', h: Mark Layer}
+  - {t: '$$mdi:backspace$$', h: Mark Layer}
+  - {t: '$$mdi:keyboard-return$$', h: Number Layer}
+  - $$mdi:pan-up$$
   - F7
   - F10
   - {t: F12, h: Device Layer}
+  - $$mdi:pan-left$$
+  - $$mdi:pan-down$$
+  - $$mdi:pan-right$$
+  - $$mdi:pan-left$$
+  - $$mdi:pan-down$$
+  - $$mdi:pan-right$$
   Mouse Layer:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - SPACE
-  - Gui+←
-  - Gui+→
-  - '&mkp MB3'
+  - $$mdi:keyboard-space$$
+  - $$mdi:page-previous-outline$$
+  - $$mdi:page-next-outline$$
+  - $$mdi:mouse-scroll-wheel$$
   - {t: ▽, type: trans}
   - '&mkp MB5'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - Gui+↑
-  - '&mkp MB1'
-  - '&mkp MB2'
-  - '&msc SCRL_UP'
-  - '&msc SCRL_DOWN'
+  - $$mdi:format-vertical-align-top$$
+  - $$mdi:mouse-left-click-outline$$
+  - $$mdi:mouse-right-click-outline$$
+  - $$mdi:pan-up$$
+  - $$mdi:pan-down$$
   - '&mkp MB4'
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - Gui+↓
-  - ←
-  - ↑
-  - →
+  - $$mdi:format-vertical-align-bottom$$
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-up-bold$$
+  - $$mdi:arrow-right-bold$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -83,9 +89,15 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - ↓
+  - $$mdi:arrow-down-bold$$
   - {t: ▽, type: trans}
   - Gui+W
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   Number Layer:
   - {t: ▽, type: trans}
   - '7'
@@ -96,39 +108,45 @@ layers:
   - F2
   - F7
   - F10
-  - RSHIFT
+  - $$mdi:apple-keyboard-shift$$
   - '*'
-  - {t: '4', h: LALT}
-  - {t: '5', h: LSHIFT}
-  - {t: '6', h: LGUI}
-  - {t: '-', h: LCTRL}
-  - '&mkp MB1'
-  - ←
-  - ↑
-  - →
-  - RGUI
+  - {t: '4', h: '$$mdi:apple-keyboard-option$$'}
+  - {t: '5', h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: '6', h: '$$mdi:apple-keyboard-command$$'}
+  - {t: '-', h: '$$mdi:apple-keyboard-control$$'}
+  - $$mdi:mouse-left-click-outline$$
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-up-bold$$
+  - $$mdi:arrow-right-bold$$
+  - $$mdi:apple-keyboard-command$$
   - /
   - '1'
   - '2'
   - '3'
   - +
-  - '&mkp MB2'
+  - $$mdi:mouse-right-click-outline$$
   - ''
-  - ↓
+  - $$mdi:arrow-down-bold$$
   - ''
-  - RALT
+  - $$mdi:apple-keyboard-option$$
   - {t: ▽, type: trans}
   - .
   - '0'
-  - {t: ▽, type: trans}
+  - $$mdi:arrow-up-bold$$
   - {t: LANG2, type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - LANG1
-  - {t: ▽, type: trans}
-  - Sft+Ctl+TAB
-  - Ctl+TAB
+  - $$mdi:arrow-up-bold$$
+  - $$mdi:skip-previous-outline$$
+  - $$mdi:skip-next-outline$$
   - F12
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-down-bold$$
+  - $$mdi:arrow-right-bold$$
+  - $$mdi:arrow-left-bold$$
+  - $$mdi:arrow-down-bold$$
+  - $$mdi:arrow-right-bold$$
   Mark Layer:
   - Sft+Gui+4
   - F4
@@ -164,25 +182,31 @@ layers:
   - {t: ▽, type: trans}
   - '0'
   - {t: ▽, type: trans}
-  - SPACE
+  - $$mdi:keyboard-space$$
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - ENTER
+  - {t: '$$mdi:keyboard-return$$', type: enter}
   - {t: ▽, type: trans}
   - ''
   - ''
   - F12
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   Device Layer:
   - ''
   - ''
   - ''
   - ''
   - BT CLR
-  - {t: BT, h: '0'}
-  - {t: BT, h: '1'}
-  - {t: BT, h: '2'}
-  - {t: BT, h: '3'}
-  - {t: BT, h: '4'}
+  - {h: '1', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '2', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '3', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '4', s: '$$mdi:bluetooth-connect$$'}
+  - {h: '5', s: '$$mdi:bluetooth-connect$$'}
   - ''
   - ''
   - ''
@@ -193,7 +217,7 @@ layers:
   - ''
   - ''
   - ''
-  - Reset
+  - {t: '$$mdi:backup-restore$$', type: bootloader}
   - ''
   - ''
   - ''
@@ -202,16 +226,22 @@ layers:
   - ''
   - ''
   - ''
-  - Reset
-  - {t: Boot, type: held}
+  - {t: '$$mdi:backup-restore$$', type: bootloader}
+  - {t: '$$mdi:progress-download$$', type: held}
   - BT CLR ALL
   - ''
   - ''
   - ''
   - ''
-  - '&studio_unlock'
+  - $$mdi:lock-open-variant-outline$$
   - ''
   - ''
   - ''
   - ''
-  - Boot
+  - $$mdi:progress-download$$
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}

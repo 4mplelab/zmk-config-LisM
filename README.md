@@ -10,8 +10,10 @@
 | ファームウェア名                                 | 説明                                    |
 |---------------------------------------------- |---------------------------------------|
 | `lism_left_peripheral_non_trackball.uf2`      | 左側 ペリフェラル 非トラックボール     |
+| `lism_left_peripheral_4waystick.uf2`          | 左側 ペリフェラル 4wayスティック       |
 | `lism_left_peripheral_trackball.uf2`          | 左側 ペリフェラル トラックボール       |
 | `lism_right_central_non_trackball.uf2`        | 右側 セントラル 非トラックボール       |
+| `lism_right_central_non_trackball.uf2`        | 右側 セントラル 4wayスティック       |
 | `lism_right_central_trackball.uf2`            | 右側 セントラル トラックボール         |
 | `settings_reset-seeeduino_xiao_ble-zmk.uf2`   | 設定リセット用                        |
 

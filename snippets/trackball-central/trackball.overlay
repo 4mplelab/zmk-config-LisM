@@ -1,4 +1,9 @@
 #include "../lism-input-processors.dtsi"
+/ {
+    chosen {
+        zmk,kscan = &kscan1;
+    };
+};
 
 &spi0 {
     status = "okay";
