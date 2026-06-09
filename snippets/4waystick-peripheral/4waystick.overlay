@@ -1,0 +1,5 @@
+#include "../4waystick.overlay"
+
+&trackball_split {
+    status = "disabled";
+};

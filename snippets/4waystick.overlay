@@ -1,0 +1,20 @@
+/delete-node/ &kscan2;
+
+&spi0 {
+    status = "disabled";
+};
+
+/ {
+    // 物理ピン
+    kscan2: kscan2 {
+        compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
+
+        input-gpios
+            = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>                     // col0 Up: GPIO10(NFC2)
+            , <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>                     // col1 Right: D6 
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>                     // col2 Down: D5
+            , <&xiao_d 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>                     // col3 Left: D4
+            ;
+    };
+};

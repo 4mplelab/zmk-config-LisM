@@ -10,10 +10,13 @@ DYA Studio対応版は[dya-studio_zmk-v0.3](https://github.com/4mplelab/zmk-conf
 | ファームウェア名                                 | 説明                                    |
 |---------------------------------------------- |---------------------------------------|
 | `lism_left_peripheral_non_trackball.uf2`      | 左側 ペリフェラル 非トラックボール     |
+| `lism_left_peripheral_4waystick.uf2`          | 左側 ペリフェラル 4wayスティック       |
 | `lism_left_peripheral_trackball.uf2`          | 左側 ペリフェラル トラックボール       |
 | `lism_right_central_non_trackball.uf2`        | 右側 セントラル 非トラックボール       |
+| `lism_right_central_non_trackball.uf2`        | 右側 セントラル 4wayスティック       |
 | `lism_right_central_trackball.uf2`            | 右側 セントラル トラックボール         |
 | `lism_right_central_non_trackball_studio.uf2` | 右側 セントラル 非トラックボール (ZMK Studio 対応) |
+| `lism_right_central_4waystick_studio.uf2` | 右側 セントラル 4wayスティック (ZMK Studio 対応) |
 | `lism_right_central_trackball_studio.uf2`     | 右側 セントラル トラックボール (ZMK Studio 対応)   |
 | `settings_reset-seeeduino_xiao_ble-zmk.uf2`   | 設定リセット用                        |
 

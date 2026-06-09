@@ -1,0 +1,6 @@
+#include "../4waystick.overlay"
+
+// split経由のリスナーを有効化
+&peripheral_listener {
+    status = "okay";
+};

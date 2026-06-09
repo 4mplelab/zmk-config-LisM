@@ -1,8 +1,120 @@
 parse_config:
   raw_binding_map:
-    '&sys_reset': Reset
-    '&bootloader': Boot
-    '&caps_word': Caps Word
+    # self behaviors
+    "&kp RG(LEFT)":
+      tap: $$mdi:page-previous-outline$$
+    "&kp RG(RIGHT)":
+      tap: $$mdi:page-next-outline$$
+    "&kp LG(UP)":
+      tap: $$mdi:format-vertical-align-top$$
+    "&kp LG(DOWN)":
+      tap: $$mdi:format-vertical-align-bottom$$
+    "&kp RS(RC(TAB))":
+      tap: $$mdi:skip-previous-outline$$
+    "&kp RC(TAB)":
+      tap: $$mdi:skip-next-outline$$
+    # Mouse
+    "&msc SCRL_UP":
+      tap: $$mdi:pan-up$$
+      hold: ''
+      shifted: ''
+    "&msc SCRL_DOWN":
+      tap: $$mdi:pan-down$$
+      hold: ''
+      shifted: ''
+    "&msc SCRL_LEFT":
+      tap: $$mdi:pan-left$$
+      hold: ''
+      shifted: ''
+    "&msc SCRL_RIGHT":
+      tap: $$mdi:pan-right$$
+      hold: ''
+      shifted: ''
+    "&mmv MOVE_LEFT":
+      tap: $$mdi:menu-left$$
+      hold: ''
+      shifted: $$mdi:mouse$$
+    "&mmv MOVE_RIGHT":
+      tap: $$mdi:menu-right$$
+      hold: ''
+      shifted: $$mdi:mouse$$
+    "&mmv MOVE_UP":
+      tap: $$mdi:menu-up$$
+      hold: ''
+      shifted: $$mdi:mouse$$
+    "&mmv MOVE_DOWN":
+      tap: $$mdi:menu-down$$
+      hold: ''
+      shifted: $$mdi:mouse$$
+    "&mkp LCLK":
+      tap: $$mdi:mouse-left-click-outline$$
+    "&mkp MB1":
+      tap: $$mdi:mouse-left-click-outline$$
+    "&mkp RCLK":
+      tap: $$mdi:mouse-right-click-outline$$
+    "&mkp MB2":
+      tap: $$mdi:mouse-right-click-outline$$
+    "&mkp MCLK":
+      tap: $$mdi:mouse-scroll-wheel$$
+    "&mkp MB3":
+      tap: $$mdi:mouse-scroll-wheel$$
+    # Modifiers
+    "&caps_word": $$mdi:alpha-w-box$$
+
+    # Empty
+    # "&none":
+    #   tap: $$mdi:minus-circle-outline$$
+    #   type: none
+
+    # Whitespace
+    "&bkspc_del":
+      type: backspace
+      tap: $$mdi:backspace$$
+      shifted: $$mdi:backspace-reverse-outline$$
+
+    # Bluetooth
+    "&bt BT_SEL 0":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: 1
+    "&bt BT_SEL 1":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: 2
+    "&bt BT_SEL 2":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: 3
+    "&bt BT_SEL 3":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: 4
+    "&bt BT_SEL 4":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: 5
+    "&out OUT_TOG":
+      shifted: $$mdi:usb$$
+      tap: $$mdi:toggle-switch$$
+      hold: $$mdi:bluetooth$$
+    "&bt BT_PRV":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: $$mdi:arrow-up-bold$$
+    "&bt BT_NXT":
+      shifted: $$mdi:bluetooth-connect$$
+      tap: ""
+      hold: $$mdi:arrow-down-bold$$
+    # Reset
+    "&sys_reset":
+      type: bootloader
+      tap: $$mdi:backup-restore$$
+    "&bootloader":
+      tap: $$mdi:progress-download$$
+
+    "&studio_unlock":
+      tap: $$mdi:lock-open-variant-outline$$
+
 
   zmk_keycode_map:
     # Symbols
@@ -44,6 +156,77 @@ parse_config:
     UP: "↑"
     DOWN: "↓"
 
+    # Modifiers
+    LCTRL: $$mdi:apple-keyboard-control$$
+    LEFT_CONTROL: $$mdi:apple-keyboard-control$$
+    LALT: $$mdi:apple-keyboard-option$$
+    LEFT_ALT: $$mdi:apple-keyboard-option$$
+    LSHIFT: $$mdi:apple-keyboard-shift$$
+    LEFT_SHIFT: $$mdi:apple-keyboard-shift$$
+    LSHFT: $$mdi:apple-keyboard-shift$$
+    LCMD: $$mdi:apple-keyboard-command$$
+    LGUI: $$mdi:apple-keyboard-command$$
+    #LG: $$mdi:apple-keyboard-command$$
+    LEFT_GUI: $$mdi:apple-keyboard-command$$
+    LEFT_COMMAND: $$mdi:apple-keyboard-command$$
+    RCTRL: $$mdi:apple-keyboard-control$$
+    RIGHT_CONTROL: $$mdi:apple-keyboard-control$$
+    RALT: $$mdi:apple-keyboard-option$$
+    RIGHT_ALT: $$mdi:apple-keyboard-option$$
+    RSHIFT: $$mdi:apple-keyboard-shift$$
+    RIGHT_SHIFT: $$mdi:apple-keyboard-shift$$
+    RSHFT: $$mdi:apple-keyboard-shift$$
+    RCMD: $$mdi:apple-keyboard-command$$
+    RGUI: $$mdi:apple-keyboard-command$$
+    #RG: $$mdi:apple-keyboard-command$$
+    PSCRN: $$mdi:printer-outline$$
+    RIGHT_COMMAND: $$mdi:apple-keyboard-command$$
+    PAGE_UP:
+      tap: 'PgUp'
+      shifted: ''
+    PAGE_DOWN:
+      tap: 'PgDn'
+      shifted: ''
+    INSERT:
+       tap: 'Ins'
+       shifted: ''
+    # "Meh" key
+    LS(LC(LALT)): $$mdi:star-three-points$$
+
+    # Arrows
+    UP: $$mdi:arrow-up-bold$$
+    UP_ARROW: $$mdi:arrow-up-bold$$
+    DOWN: $$mdi:arrow-down-bold$$
+    DOWN_ARROW: $$mdi:arrow-down-bold$$
+    LEFT_ARROW: $$mdi:arrow-left-bold$$
+    LEFT: $$mdi:arrow-left-bold$$
+    RIGHT: $$mdi:arrow-right-bold$$
+    RIGHT_ARROW: $$mdi:arrow-right-bold$$
+
+    # Whitespace
+    ENTER:
+      type: enter
+      tap: $$mdi:keyboard-return$$
+    RET:
+      type: enter
+      tap: $$mdi:keyboard-return$$
+    ESC: $$mdi:keyboard-esc$$
+    ESCAPE: $$mdi:keyboard-esc$$
+    TAB: $$mdi:keyboard-tab$$
+    LS(TAB): $$mdi:keyboard-tab-reverse$$
+    SPACE: $$mdi:keyboard-space$$
+    BACKSPACE:
+      type: backspace
+      tap: $$mdi:backspace$$
+    BSPC:
+      type: backspace
+      tap: $$mdi:backspace$$
+    DELETE: $$mdi:backspace-reverse-outline$$
+    DEL: $$mdi:backspace-reverse-outline$$
+
+    # Locks
+    CAPSLOCK: $$mdi:apple-keyboard-caps$$
+    CAPS: $$mdi:apple-keyboard-caps$$
 
 draw_config:
   dark_mode: auto
