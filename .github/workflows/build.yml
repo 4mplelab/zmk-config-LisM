@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [ main ]
+    tags-ignore:
+      - 'v*' # リリース用タグはrelease.yml側でビルドするので重複を避ける
     paths:
       - '.github/workflows/build.yml'
       - 'boards/**'
